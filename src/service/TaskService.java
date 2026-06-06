@@ -84,6 +84,21 @@ public class TaskService {
         return true;
     }
 
+    public boolean deleteTask(int taskId) {
+
+        Task task =
+                searchTask(taskId);
+
+        if (task == null) {
+
+            return false;
+        }
+
+        tasks.remove(task);
+
+        return true;
+    }
+
     public ArrayList<Task> getTasks() {
         return tasks;
     }

@@ -26,20 +26,26 @@ public class Main {
                         "TODO",
                         "MEDIUM"));
 
+        taskService.addTask(
+                new Task(
+                        3,
+                        "Build Project",
+                        "Task Manager System",
+                        "TODO",
+                        "HIGH"));
+
         System.out.println(
-                "\nBefore Update:");
+                "\nBefore Delete:");
 
         taskService.viewTasks();
 
-        boolean updated =
-                taskService.updateTaskStatus(
-                        1,
-                        "IN_PROGRESS");
+        boolean deleted =
+                taskService.deleteTask(2);
 
-        if (updated) {
+        if (deleted) {
 
             System.out.println(
-                    "\nStatus Updated Successfully");
+                    "\nTask Deleted Successfully");
 
         } else {
 
@@ -48,7 +54,7 @@ public class Main {
         }
 
         System.out.println(
-                "\nAfter Update:");
+                "\nAfter Delete:");
 
         taskService.viewTasks();
     }
