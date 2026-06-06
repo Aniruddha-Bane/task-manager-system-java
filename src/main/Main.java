@@ -3,82 +3,99 @@ package main;
 import model.Task;
 import service.TaskService;
 
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
 
+        Scanner sc = new Scanner(System.in);
+
         TaskService taskService =
                 new TaskService();
 
-        taskService.addTask(
-                new Task(
-                        1,
-                        "Learn Java",
-                        "Practice OOP",
-                        "DONE",
-                        "HIGH"));
+        int choice;
 
-        taskService.addTask(
-                new Task(
-                        2,
-                        "Learn Collections",
-                        "Practice ArrayList",
-                        "TODO",
-                        "MEDIUM"));
-
-        taskService.addTask(
-                new Task(
-                        3,
-                        "Build Project",
-                        "Task Manager System",
-                        "IN_PROGRESS",
-                        "HIGH"));
-
-        taskService.addTask(
-                new Task(
-                        4,
-                        "Learn Git",
-                        "Push code to GitHub",
-                        "DONE",
-                        "LOW"));
-
-        System.out.println("\nALL TASKS");
-        taskService.viewTasks();
-
-        System.out.println("\nSEARCH TASK ID 2");
-
-        Task foundTask =
-                taskService.searchTask(2);
-
-        if (foundTask != null) {
-
-            System.out.println(foundTask);
-
-        } else {
+        do {
 
             System.out.println(
-                    "Task not found.");
-        }
+                    "\n=========================");
+            System.out.println(
+                    " TASK MANAGER SYSTEM");
+            System.out.println(
+                    "=========================");
 
-        System.out.println(
-                "\nUPDATE STATUS OF TASK 2");
+            System.out.println("1. Add Task");
+            System.out.println("2. View Tasks");
+            System.out.println("3. Search Task");
+            System.out.println("4. Update Status");
+            System.out.println("5. Delete Task");
+            System.out.println("6. Generate Report");
+            System.out.println("7. Exit");
 
-        taskService.updateTaskStatus(
-                2,
-                "IN_PROGRESS");
+            System.out.print(
+                    "\nEnter Choice: ");
 
-        taskService.viewTasks();
+            choice = sc.nextInt();
+            sc.nextLine();
 
-        System.out.println(
-                "\nDELETE TASK 3");
+            switch (choice) {
 
-        taskService.deleteTask(3);
+                case 1:
 
-        taskService.viewTasks();
+                    System.out.print(
+                            "Enter Task ID: ");
+                    int id = sc.nextInt();
+                    sc.nextLine();
 
-        System.out.println(
-                "\nGENERATE REPORT");
+                    System.out.print(
+                            "Enter Title: ");
+                    String title =
+                            sc.nextLine();
 
-        taskService.generateReport();
+                    System.out.print(
+                            "Enter Description: ");
+                    String description =
+                            sc.nextLine();
+
+                    System.out.print(
+                            "Enter Priority: ");
+                    String priority =
+                            sc.nextLine();
+
+                    Task task =
+                            new Task(
+                                    id,
+                                    title,
+                                    description,
+                                    "TODO",
+                                    priority);
+
+                    taskService.addTask(task);
+
+                    break;
+
+                case 2:
+
+                    taskService.viewTasks();
+
+                    break;
+
+                case 7:
+
+                    System.out.println(
+                            "\nExiting Application...");
+
+                    break;
+
+                default:
+
+                    System.out.println(
+                            "Invalid Choice.");
+            }
+
+        } while (choice != 7);
+
+        sc.close();
     }
 }
