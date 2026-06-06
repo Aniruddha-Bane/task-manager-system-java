@@ -1,15 +1,16 @@
 package service;
 
 import model.Task;
-
 import java.util.ArrayList;
 
 public class TaskService {
-    private ArrayList<Task> tasks;
-    public TaskService(){
-        tasks = new ArrayList<>();
 
+    private ArrayList<Task> tasks;
+
+    public TaskService() {
+        tasks = new ArrayList<>();
     }
+
     public void addTask(Task task) {
 
         for (Task existingTask : tasks) {
@@ -29,9 +30,7 @@ public class TaskService {
         System.out.println(
                 "Task added successfully.");
     }
-    public ArrayList<Task> getTasks(){
-        return tasks;
-    }
+
     public void viewTasks() {
 
         if (tasks.isEmpty()) {
@@ -45,7 +44,7 @@ public class TaskService {
         System.out.println(
                 "\n=========================");
         System.out.println(
-                "      TASK LIST");
+                "       TASK LIST");
         System.out.println(
                 "=========================");
 
@@ -53,5 +52,22 @@ public class TaskService {
 
             System.out.println(task);
         }
+    }
+
+    public Task searchTask(int taskId) {
+
+        for (Task task : tasks) {
+
+            if (task.getTaskId() == taskId) {
+
+                return task;
+            }
+        }
+
+        return null;
+    }
+
+    public ArrayList<Task> getTasks() {
+        return tasks;
     }
 }
