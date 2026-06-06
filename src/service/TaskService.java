@@ -1,0 +1,35 @@
+package service;
+
+import model.Task;
+
+import java.util.ArrayList;
+
+public class TaskService {
+    private ArrayList<Task> tasks;
+    public TaskService(){
+        tasks = new ArrayList<>();
+
+    }
+    public void addTask(Task task) {
+
+        for (Task existingTask : tasks) {
+
+            if (existingTask.getTaskId()
+                    == task.getTaskId()) {
+
+                System.out.println(
+                        "Task ID already exists.");
+
+                return;
+            }
+        }
+
+        tasks.add(task);
+
+        System.out.println(
+                "Task added successfully.");
+    }
+    public ArrayList<Task> getTasks(){
+        return tasks;
+    }
+}
