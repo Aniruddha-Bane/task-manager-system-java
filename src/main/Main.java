@@ -15,7 +15,7 @@ public class Main {
                         1,
                         "Learn Java",
                         "Practice OOP",
-                        "TODO",
+                        "DONE",
                         "HIGH"));
 
         taskService.addTask(
@@ -31,31 +31,54 @@ public class Main {
                         3,
                         "Build Project",
                         "Task Manager System",
-                        "TODO",
+                        "IN_PROGRESS",
                         "HIGH"));
 
-        System.out.println(
-                "\nBefore Delete:");
+        taskService.addTask(
+                new Task(
+                        4,
+                        "Learn Git",
+                        "Push code to GitHub",
+                        "DONE",
+                        "LOW"));
 
+        System.out.println("\nALL TASKS");
         taskService.viewTasks();
 
-        boolean deleted =
-                taskService.deleteTask(2);
+        System.out.println("\nSEARCH TASK ID 2");
 
-        if (deleted) {
+        Task foundTask =
+                taskService.searchTask(2);
 
-            System.out.println(
-                    "\nTask Deleted Successfully");
+        if (foundTask != null) {
+
+            System.out.println(foundTask);
 
         } else {
 
             System.out.println(
-                    "\nTask Not Found");
+                    "Task not found.");
         }
 
         System.out.println(
-                "\nAfter Delete:");
+                "\nUPDATE STATUS OF TASK 2");
+
+        taskService.updateTaskStatus(
+                2,
+                "IN_PROGRESS");
 
         taskService.viewTasks();
+
+        System.out.println(
+                "\nDELETE TASK 3");
+
+        taskService.deleteTask(3);
+
+        taskService.viewTasks();
+
+        System.out.println(
+                "\nGENERATE REPORT");
+
+        taskService.generateReport();
     }
 }

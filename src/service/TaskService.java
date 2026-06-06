@@ -11,6 +11,7 @@ public class TaskService {
         tasks = new ArrayList<>();
     }
 
+    // CREATE
     public void addTask(Task task) {
 
         for (Task existingTask : tasks) {
@@ -31,6 +32,7 @@ public class TaskService {
                 "Task added successfully.");
     }
 
+    // READ ALL
     public void viewTasks() {
 
         if (tasks.isEmpty()) {
@@ -54,6 +56,7 @@ public class TaskService {
         }
     }
 
+    // SEARCH
     public Task searchTask(int taskId) {
 
         for (Task task : tasks) {
@@ -67,6 +70,7 @@ public class TaskService {
         return null;
     }
 
+    // UPDATE
     public boolean updateTaskStatus(
             int taskId,
             String newStatus) {
@@ -84,6 +88,7 @@ public class TaskService {
         return true;
     }
 
+    // DELETE
     public boolean deleteTask(int taskId) {
 
         Task task =
@@ -97,6 +102,70 @@ public class TaskService {
         tasks.remove(task);
 
         return true;
+    }
+
+    // REPORTS
+    public void generateReport() {
+
+        int totalTasks = tasks.size();
+
+        int todoCount = 0;
+        int inProgressCount = 0;
+        int doneCount = 0;
+
+        for (Task task : tasks) {
+
+            if (task.getStatus().equals("TODO")) {
+
+                todoCount++;
+
+            } else if (task.getStatus()
+                    .equals("IN_PROGRESS")) {
+
+                inProgressCount++;
+
+            } else if (task.getStatus()
+                    .equals("DONE")) {
+
+                doneCount++;
+            }
+        }
+
+        double completionRate = 0;
+
+        if (totalTasks > 0) {
+
+            completionRate =
+                    ((double) doneCount
+                            / totalTasks) * 100;
+        }
+
+        System.out.println(
+                "\n=========================");
+        System.out.println(
+                "      TASK REPORT");
+        System.out.println(
+                "=========================");
+
+        System.out.println(
+                "Total Tasks       : "
+                        + totalTasks);
+
+        System.out.println(
+                "TODO Tasks        : "
+                        + todoCount);
+
+        System.out.println(
+                "IN_PROGRESS Tasks : "
+                        + inProgressCount);
+
+        System.out.println(
+                "DONE Tasks        : "
+                        + doneCount);
+
+        System.out.println(
+                "Completion Rate   : "
+                        + completionRate + "%");
     }
 
     public ArrayList<Task> getTasks() {
