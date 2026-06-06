@@ -67,6 +67,23 @@ public class TaskService {
         return null;
     }
 
+    public boolean updateTaskStatus(
+            int taskId,
+            String newStatus) {
+
+        Task task =
+                searchTask(taskId);
+
+        if (task == null) {
+
+            return false;
+        }
+
+        task.setStatus(newStatus);
+
+        return true;
+    }
+
     public ArrayList<Task> getTasks() {
         return tasks;
     }

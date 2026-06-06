@@ -26,33 +26,30 @@ public class Main {
                         "TODO",
                         "MEDIUM"));
 
-        taskService.addTask(
-                new Task(
-                        3,
-                        "Build Project",
-                        "Task Manager System",
-                        "TODO",
-                        "HIGH"));
+        System.out.println(
+                "\nBefore Update:");
 
-        System.out.println("\nALL TASKS:");
         taskService.viewTasks();
 
-        System.out.println("\nSEARCHING TASK ID 2...");
+        boolean updated =
+                taskService.updateTaskStatus(
+                        1,
+                        "IN_PROGRESS");
 
-        Task foundTask =
-                taskService.searchTask(2);
-
-        if (foundTask != null) {
+        if (updated) {
 
             System.out.println(
-                    "\nTask Found:");
-
-            System.out.println(foundTask);
+                    "\nStatus Updated Successfully");
 
         } else {
 
             System.out.println(
-                    "Task not found.");
+                    "\nTask Not Found");
         }
+
+        System.out.println(
+                "\nAfter Update:");
+
+        taskService.viewTasks();
     }
 }
