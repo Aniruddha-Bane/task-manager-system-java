@@ -1,6 +1,8 @@
 package service;
 
 import model.Task;
+import util.FileManager;
+
 import java.util.ArrayList;
 
 public class TaskService {
@@ -8,37 +10,43 @@ public class TaskService {
     private ArrayList<Task> tasks;
 
     public TaskService() {
-        tasks = new ArrayList<>();
+
+        FileManager.initializeStorage();
+
+        tasks =
+                FileManager.loadTasks();
     }
 
-    // CREATE
-    public void addTask(Task task) {
+    /*
+     * CREATE
+     */
+    public boolean addTask(Task task) {
 
         for (Task existingTask : tasks) {
 
             if (existingTask.getTaskId()
                     == task.getTaskId()) {
 
-                System.out.println(
-                        "Task ID already exists.");
-
-                return;
+                return false;
             }
         }
 
         tasks.add(task);
 
-        System.out.println(
-                "Task added successfully.");
+        FileManager.saveTasks(tasks);
+
+        return true;
     }
 
-    // READ ALL
+    /*
+     * READ ALL
+     */
     public void viewTasks() {
 
         if (tasks.isEmpty()) {
 
             System.out.println(
-                    "No tasks available.");
+                    "\nNo tasks available.");
 
             return;
         }
@@ -56,12 +64,15 @@ public class TaskService {
         }
     }
 
-    // SEARCH
+    /*
+     * SEARCH
+     */
     public Task searchTask(int taskId) {
 
         for (Task task : tasks) {
 
-            if (task.getTaskId() == taskId) {
+            if (task.getTaskId()
+                    == taskId) {
 
                 return task;
             }
@@ -70,7 +81,9 @@ public class TaskService {
         return null;
     }
 
-    // UPDATE
+    /*
+     * UPDATE STATUS
+     */
     public boolean updateTaskStatus(
             int taskId,
             String newStatus) {
@@ -83,13 +96,19 @@ public class TaskService {
             return false;
         }
 
-        task.setStatus(newStatus);
+        task.setStatus(
+                newStatus.toUpperCase());
+
+        FileManager.saveTasks(tasks);
 
         return true;
     }
 
-    // DELETE
-    public boolean deleteTask(int taskId) {
+    /*
+     * DELETE
+     */
+    public boolean deleteTask(
+            int taskId) {
 
         Task task =
                 searchTask(taskId);
@@ -101,13 +120,18 @@ public class TaskService {
 
         tasks.remove(task);
 
+        FileManager.saveTasks(tasks);
+
         return true;
     }
 
-    // REPORTS
+    /*
+     * REPORTS
+     */
     public void generateReport() {
 
-        int totalTasks = tasks.size();
+        int totalTasks =
+                tasks.size();
 
         int todoCount = 0;
         int inProgressCount = 0;
@@ -115,17 +139,21 @@ public class TaskService {
 
         for (Task task : tasks) {
 
-            if (task.getStatus().equals("TODO")) {
+            String status =
+                    task.getStatus();
+
+            if (status.equalsIgnoreCase(
+                    "TODO")) {
 
                 todoCount++;
 
-            } else if (task.getStatus()
-                    .equals("IN_PROGRESS")) {
+            } else if (status.equalsIgnoreCase(
+                    "IN_PROGRESS")) {
 
                 inProgressCount++;
 
-            } else if (task.getStatus()
-                    .equals("DONE")) {
+            } else if (status.equalsIgnoreCase(
+                    "DONE")) {
 
                 doneCount++;
             }
@@ -163,12 +191,40 @@ public class TaskService {
                 "DONE Tasks        : "
                         + doneCount);
 
-        System.out.println(
-                "Completion Rate   : "
-                        + completionRate + "%");
+        System.out.printf(
+                "Completion Rate   : %.2f%%\n",
+                completionRate);
     }
 
+    /*
+     * VALIDATION
+     */
+    public boolean isValidStatus(
+            String status) {
+
+        return status.equalsIgnoreCase(
+                "TODO")
+                ||
+                status.equalsIgnoreCase(
+                        "IN_PROGRESS")
+                ||
+                status.equalsIgnoreCase(
+                        "DONE");
+    }
+
+    /*
+     * TOTAL TASKS
+     */
+    public int getTaskCount() {
+
+        return tasks.size();
+    }
+
+    /*
+     * GET ALL TASKS
+     */
     public ArrayList<Task> getTasks() {
+
         return tasks;
     }
 }
