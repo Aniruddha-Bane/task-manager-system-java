@@ -32,4 +32,26 @@ public class TaskService {
     public ArrayList<Task> getTasks(){
         return tasks;
     }
+    public void viewTasks() {
+
+        if (tasks.isEmpty()) {
+
+            System.out.println(
+                    "No tasks available.");
+
+            return;
+        }
+
+        System.out.println(
+                "\n=========================");
+        System.out.println(
+                "      TASK LIST");
+        System.out.println(
+                "=========================");
+
+        for (Task task : tasks) {
+
+            System.out.println(task);
+        }
+    }
 }
